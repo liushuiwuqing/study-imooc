@@ -18,21 +18,6 @@ public class FastJsonConvertUtils {
     private static final Logger logger = LoggerFactory.getLogger(FastJsonConvertUtils.class);
 
     /**
-     * 将对象转为JSON字符串
-     *
-     * @param obj 任意对象
-     * @return JSON字符串
-     */
-    public static String convertObjectToJson(Object obj) {
-        try {
-            return JSON.toJSONString(obj);
-        } catch (Exception ex) {
-            logger.warn("将对象转为JSON字符串异常：" + ex);
-            throw new RuntimeException("将对象转为JSON字符串异常：" + ex.getMessage(), ex);
-        }
-    }
-
-    /**
      * 将JSON字符串转为对象
      *
      * @param message JSON字符串
@@ -46,6 +31,21 @@ public class FastJsonConvertUtils {
         } catch (Exception ex) {
             logger.warn("将JSON字符串转为对象异常：" + ex);
             throw new RuntimeException("将JSON字符串转为对象异常：" + ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * 将对象转为JSON字符串
+     *
+     * @param obj 任意对象
+     * @return JSON字符串
+     */
+    public static String convertObjectToJson(Object obj) {
+        try {
+            return JSON.toJSONString(obj);
+        } catch (Exception ex) {
+            logger.warn("将对象转为JSON字符串异常：" + ex);
+            throw new RuntimeException("将对象转为JSON字符串异常：" + ex.getMessage(), ex);
         }
     }
 }

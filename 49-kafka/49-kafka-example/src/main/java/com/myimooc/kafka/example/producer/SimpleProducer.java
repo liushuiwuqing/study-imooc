@@ -1,6 +1,7 @@
 package com.myimooc.kafka.example.producer;
 
 import com.alibaba.fastjson.JSON;
+import com.myimooc.kafka.example.common.MessageEntity;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
@@ -28,7 +29,7 @@ public class SimpleProducer<T> {
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void send(String topic, String key, Object entity) {
+    public void send(String topic, String key, MessageEntity entity) {
         logger.info("发送消息入参：{}", entity);
         ProducerRecord<String, Object> record = new ProducerRecord<>(
                 topic,
@@ -41,7 +42,7 @@ public class SimpleProducer<T> {
         future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
             @Override
             public void onFailure(Throwable ex) {
-                logger.error("消息发送失败：{}", ex);
+                logger.error("消息发送失败:", ex);
             }
 
             @Override
@@ -56,7 +57,7 @@ public class SimpleProducer<T> {
                         .append("send to partition(").append(metadata.partition()).append(")")
                         .append("with offset(").append(metadata.offset()).append(")")
                         .append("in ").append(elapsedTime).append(" ms");
-                logger.info("消息发送成功：{}", record.toString());
+                logger.info("消息发送成功onSuccess：{}", record.toString());
             }
         });
     }

@@ -13,6 +13,7 @@
 
     <properties>
         <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
+        <skipTests>true</skipTests>
     </properties>
 
     <dependencyManagement>
@@ -104,6 +105,10 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -127,12 +132,12 @@
                 </includes>
             </resource>
             <!-- 如果配置了拷贝java classpath下面的xml，项目中其他的配置文件应该手动配置复制过去 -->
-            <!-- <resource>
+             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
-                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
                 </includes>
-            </resource> -->
+            </resource>
         </resources>
     </build>
 

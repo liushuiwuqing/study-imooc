@@ -9,7 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Random;
 
 /**
  * <br>
@@ -24,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProducerController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Random random = new Random();
 
     @Autowired
     private SimpleProducer simpleProducer;
@@ -37,12 +43,20 @@ public class ProducerController {
     public Response sendKafka(@RequestBody MessageEntity message) {
         try {
             logger.info("kafka的消息：{}", JSON.toJSONString(message));
-            this.simpleProducer.send(topic, KEY, message);
+            if (random.nextInt(2) == 0) {
+                this.simpleProducer.send(topic, KEY, message);
+            } else {
+                this.simpleProducer.send("myimooc-kafka-topic2", KEY, message);
+            }
             logger.info("kafka消息发送成功！");
-            return new Response(ErrorCode.SUCCESS,"kafka消息发送成功");
+            return new Response(ErrorCode.SUCCESS, "kafka消息发送成功");
         } catch (Exception ex) {
             logger.error("kafka消息发送失败：", ex);
-            return new Response(ErrorCode.EXCEPTION,"kafka消息发送失败");
+            return new Response(ErrorCode.EXCEPTION, "kafka消息发送失败");
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Random().nextInt(2));
     }
 }
